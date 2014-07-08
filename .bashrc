@@ -15,6 +15,7 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 # GOPATH
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/Documents/go
+export PATH=$PATH:$GOROOT/bin
 
 # HOMEBREW
 if [[ $( uname ) == 'Darwin' ]]; then
@@ -22,10 +23,8 @@ if [[ $( uname ) == 'Darwin' ]]; then
   export PATH=/usr/local/bin:$PATH
 fi
 
-# PYTHON - PIP
-export PIP_REQUIRE_VIRTUALENV=true
-
 # PYTHON - VIRTUALENVWRAPPER
+export PIP_REQUIRE_VIRTUALENV=true
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Documents/git
-source /usr/local/bin/virtualenvwrapper.sh
+source /usr/local/bin/virtualenvwrapper.sh 2> /dev/null

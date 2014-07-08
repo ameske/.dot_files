@@ -1,7 +1,7 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " .vimrc
 " Author: Kyle Ames
-" Date: February 27, 2014
+" Date: June 19, 2014
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " This file isn't compatible with vi.
@@ -17,11 +17,15 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " Github Plugins
-Plugin 'gmarik/vundle'
-Plugin 'scrooloose/syntastic'
+Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'majutsushi/tagbar'
 Plugin 'christoomey/vim-tmux-navigator'
+" Plugin 'Lokaltog/vim-easymotion'
+Plugin 'fatih/vim-go'
+Plugin 'tpope/vim-fugitive'
+Plugin 'gregsexton/gitv'
+Plugin 'bling/vim-airline'
 
 " Vundle is done, turn the file stuff back on
 call vundle#end()
@@ -115,14 +119,16 @@ endif
 " Programming Specific Settings - (Syntax, Plugins, Features, etc.)
 "*******************************************************************
 
-" Set up an informative status line
-if has('statusline')
-  if version >= 700
-    set statusline=%-02.2n\ %t\ %y\ %m\ %r\ %L\ lines%=%1L,%cC\ \(%P\)
-    " Enable the status line
-    set laststatus=2
-  endif
-endif
+" DEPRECATED BY VIM-AIRLINE: Set up an informative status line
+"if has('statusline')
+"  if version >= 700
+"    set statusline=%-02.2n\ %t\ %y\ %m\ %r\ %L\ lines%=%1L,%cC\ \(%P\)
+"    " Enable the status line
+"    set laststatus=2
+"  endif
+"endif
+set laststatus=2
+let g:airline_theme='murmur'
 
 " Enable spell-checking, if we have it.
 if has ('spell')
@@ -149,10 +155,17 @@ nmap <F4> :TagbarToggle<CR>
 " NERDTree - A file system browser for vim
 map <F5> :NERDTreeToggle<CR>
 
-" Go-lang: Adds go's vim bits
-if exists("$GOROOT")
-  set rtp+=$GOROOT/misc/vim
-endif
+" vim-go - Golang plugins for vim
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+au FileType go nmap gd <Plug>(go-def)
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+au FileType go nmap <Leader>r <Plug>(go-run)
+au FileType go nmap <Leader>b <Plug>(go-build)
+au FileType go nmap <Leader>t <Plug>(go-test)
 
 " Folding - Enable folding if your snytax supports it. This does not start enabled by default when a file is opened.
 if has('folding')
