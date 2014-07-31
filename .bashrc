@@ -1,3 +1,8 @@
+# SOURCE THE STANDARD GLOBAL DEFINITIONS
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
 # ALIAS DEFINITIONS
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
@@ -14,8 +19,12 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 
 # GOPATH
 export GOROOT=/usr/local/go
-export GOPATH=$HOME/Documents/go
-export PATH=$PATH:$GOROOT/bin
+#export GOPATH=/home/ka/nspector1/api/gopivot
+export GOPATH=/home/ka/nspector1/api/gopivot3.0
+
+# GIT PROMPT INFO
+#GIT_PROMPT_ONLY_IN_REPO=1
+#source ~/.bash-git-prompt/gitprompt.sh
 
 # HOMEBREW
 if [[ $( uname ) == 'Darwin' ]]; then
@@ -24,7 +33,7 @@ if [[ $( uname ) == 'Darwin' ]]; then
 fi
 
 # PYTHON - VIRTUALENVWRAPPER
-export PIP_REQUIRE_VIRTUALENV=true
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Documents/git
-source /usr/local/bin/virtualenvwrapper.sh 2> /dev/null
+#export PIP_REQUIRE_VIRTUALENV=true
+#export WORKON_HOME=$HOME/.virtualenvs
+#export PROJECT_HOME=$HOME/Documents/git
+#source /usr/local/bin/virtualenvwrapper.sh 2> /dev/null

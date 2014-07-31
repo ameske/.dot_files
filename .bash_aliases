@@ -11,8 +11,14 @@ alias madison='ssh madison'
 alias zaneshowker='ssh zaneshowker'
 
 # COMMAND ALIAS LIST
-alias ls='ls -Gl'
-alias la='ls -Gla'
+if [[ $( uname ) == 'Darwin' ]]; then
+    alias ls='ls -Gl'
+    alias la='ls -Gla'
+else
+    alias ls='ls -l --color'
+    alias la='ls -la --color'
+fi
+
 alias grep='grep --color'
 
 # ANY PROJECT SPECIFIC ALIASES

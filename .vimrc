@@ -26,6 +26,7 @@ Plugin 'fatih/vim-go'
 Plugin 'tpope/vim-fugitive'
 Plugin 'gregsexton/gitv'
 Plugin 'bling/vim-airline'
+Plugin 'pangloss/vim-javascript'
 
 " Vundle is done, turn the file stuff back on
 call vundle#end()
