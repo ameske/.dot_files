@@ -17,15 +17,6 @@ export LESS_TERMCAP_so=$'\E[01;42;30m' # begin the info box
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
-# GOPATH
-export GOROOT=/usr/local/go
-#export GOPATH=/home/ka/nspector1/api/gopivot
-export GOPATH=/home/ka/nspector1/api/gopivot3.0
-
-# GIT PROMPT INFO
-#GIT_PROMPT_ONLY_IN_REPO=1
-#source ~/.bash-git-prompt/gitprompt.sh
-
 # HOMEBREW
 if [[ $( uname ) == 'Darwin' ]]; then
   # BREW
