@@ -3,9 +3,17 @@ alias grep='egrep --color -n'
 
 # LS ALIASES BASED ON OS
 if [[ $( uname ) == 'Darwin' ]]; then
-    alias ls='ls -Gl'
-    alias la='ls -Gla'
+    alias ls='ls -Glh'
+    alias la='ls -Glah'
 else
-    alias ls='ls -l --color'
-    alias la='ls -la --color'
+    alias ls='ls -lh --color'
+    alias la='ls -lah --color'
 fi
+
+# SUFFIX ALIASES
+alias -s go=vim
+alias -s c=gim
+alias -s tex=vim
+alias -s py=vim
+alias -s txt=vim
+alias -s sh=bash
