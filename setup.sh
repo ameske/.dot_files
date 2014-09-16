@@ -1,5 +1,17 @@
 #!/bin/bash
 
+#******************************************************************************
+# setup.sh
+#
+# Installs configuration files to setup my preferred dev environment.
+#
+# Note: This script assumes the repo is located in a folder
+# named .dot_files
+#
+# Author: Kyle Ames
+# Date: Sep 16, 2014
+#******************************************************************************
+
 # Install zsh
 curl -L http://install.ohmyz.sh | sh
 
