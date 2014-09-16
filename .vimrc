@@ -27,6 +27,8 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'gregsexton/gitv'
 Plugin 'bling/vim-airline'
 Plugin 'pangloss/vim-javascript'
+" Plugin 'valloric/YouCompleteMe'
+" Plugin 'sirver/ultisnips'
 
 " Vundle is done, turn the file stuff back on
 call vundle#end()
@@ -38,6 +40,9 @@ filetype plugin indent on
 
 " Don't have files trying to override this .vimrc:
 set nomodeline
+
+" WTF happened to backspace with vim 7.4. on RHEL?
+set backspace=indent,eol,start
 
 " Clear any existing autocommands
 autocmd!
@@ -73,11 +78,6 @@ if has('cmdline_info')
   set showmode
   set showcmd
   set ruler
-endif
-
-" Enable mouse mode
-if has('mouse')
-  set mouse=vic
 endif
 
 " Split Management
@@ -120,14 +120,7 @@ endif
 " Programming Specific Settings - (Syntax, Plugins, Features, etc.)
 "*******************************************************************
 
-" DEPRECATED BY VIM-AIRLINE: Set up an informative status line
-"if has('statusline')
-"  if version >= 700
-"    set statusline=%-02.2n\ %t\ %y\ %m\ %r\ %L\ lines%=%1L,%cC\ \(%P\)
-"    " Enable the status line
-"    set laststatus=2
-"  endif
-"endif
+" Vim-Airline
 set laststatus=2
 let g:airline_theme='murmur'
 
@@ -167,6 +160,10 @@ au FileType go nmap <Leader>dt <Plug>(go-def-tab)
 au FileType go nmap <Leader>r <Plug>(go-run)
 au FileType go nmap <Leader>b <Plug>(go-build)
 au FileType go nmap <Leader>t <Plug>(go-test)
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
 
 " Folding - Enable folding if your snytax supports it. This does not start enabled by default when a file is opened.
 if has('folding')

@@ -22,9 +22,3 @@ if [[ $( uname ) == 'Darwin' ]]; then
   # BREW
   export PATH=/usr/local/bin:$PATH
 fi
-
-# PYTHON - VIRTUALENVWRAPPER
-#export PIP_REQUIRE_VIRTUALENV=true
-#export WORKON_HOME=$HOME/.virtualenvs
-#export PROJECT_HOME=$HOME/Documents/git
-#source /usr/local/bin/virtualenvwrapper.sh 2> /dev/null

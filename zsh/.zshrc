@@ -41,9 +41,15 @@ ZSH_CUSTOM="/home/ka/.dot_files/zsh"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
 
+DISABLE_AUTO_TITLE="true"
+
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
+#**************USER CONFIGURATIONS****************************#
+
+# vim style keybindings
+bindkey -v
+
 export PATH="/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/ka/bin:/home/ka/bin"
 
 # COLOR THE MAN PAGES
@@ -59,3 +65,7 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 if [[ $( uname ) == 'Darwin' ]]; then
   export PATH=/usr/local/bin:$PATH
 fi
+
+function tabname {
+  printf "\e]1;$1\a"
+}
