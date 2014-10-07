@@ -1,0 +1,17 @@
+######################
+# Alias List
+#
+# Author: Kyle Ames
+# Updated Oct 7, 2014
+# ####################
+
+# COMMAND ALIAS LIST
+if [[ $( uname ) == 'Darwin' ]]; then
+    alias ls='ls -Glh'
+    alias la='ls -Glah'
+else
+    alias ls='ls -lh --color'
+    alias la='ls -lah --color'
+fi
+
+alias grep='grep --color -n'

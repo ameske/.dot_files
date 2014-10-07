@@ -3,9 +3,14 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
-# ALIAS DEFINITIONS
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+# GLOBAL (ALL MACHINES) ALIAS DEFINITIONS
+if [ -f ~/.global_aliases ]; then
+    . ~/.global_aliases
+fi
+
+# LOCAL (MACHINE SPECIFIC) ALIAS DEFINITIONS
+if [ -f ~/.global_aliases ]; then
+    . ~/.global_aliases
 fi
 
 # COLOR THE MAN PAGES
