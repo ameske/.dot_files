@@ -1,0 +1,28 @@
+##########################
+# GlobalAlias List
+# 
+# Aliases that I want on every machine I use
+#
+# Author: Kyle Ames
+# Updated: Oct 16, 2014
+##########################
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls -lh --color=auto'
+    alias la='ls -lah --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# Handy navigation things
+alias c='clear'
+alias mkdir='mkdir -pv'
+
+# Set GOPATH quickly
+alias gop='export GOPATH=$(pwd)'
