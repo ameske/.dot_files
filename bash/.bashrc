@@ -4,13 +4,13 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # GLOBAL (ALL MACHINES) ALIAS DEFINITIONS
-if [ -f ~/.global_aliases ]; then
-    . ~/.global_aliases
+if [ -f ~/.dot_files/bash/global_aliases ]; then
+    . ~/.dot_files/bash/global_aliases
 fi
 
 # LOCAL (MACHINE SPECIFIC) ALIAS DEFINITIONS
-if [ -f ~/.global_aliases ]; then
-    . ~/.global_aliases
+if [ -f ~/.dot_files/bash/local_aliases ]; then
+    . ~/.dot_files/bash/local_aliases
 fi
 
 # COLOR THE MAN PAGES
@@ -24,6 +24,5 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 
 # HOMEBREW
 if [[ $( uname ) == 'Darwin' ]]; then
-  # BREW
   export PATH=/usr/local/bin:$PATH
 fi
