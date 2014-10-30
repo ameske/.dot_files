@@ -6,6 +6,7 @@
 
 " This file isn't compatible with vi.
 set nocompatible
+set t_Co=256
 
 "*******************************************************************
 " Vundle Plugin Manager - github.com/gmarik/vundle
@@ -19,11 +20,12 @@ call vundle#begin()
 " Github Plugins
 Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
 Plugin 'majutsushi/tagbar'
 Plugin 'christoomey/vim-tmux-navigator'
-" Plugin 'Lokaltog/vim-easymotion'
 Plugin 'fatih/vim-go'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-unimpaired'
 Plugin 'gregsexton/gitv'
 Plugin 'bling/vim-airline'
 Plugin 'pangloss/vim-javascript'
@@ -38,14 +40,14 @@ filetype plugin indent on
 " General Vim Settings
 "*******************************************************************
 
+" Clear any existing autocommands
+autocmd!
+
 " Don't have files trying to override this .vimrc:
 set nomodeline
 
 " WTF happened to backspace with vim 7.4. on RHEL?
 set backspace=indent,eol,start
-
-" Clear any existing autocommands
-autocmd!
 
 " Show numbers, don't beep at me, and save 50 lines of history
 set number
@@ -80,7 +82,7 @@ if has('cmdline_info')
   set ruler
 endif
 
-" Split Management
+" Split Management - Makes things a whole lot easier to navigate
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
@@ -136,7 +138,7 @@ if has('syntax')
   syntax on
   if has('extra_search')
     set hlsearch
-    "Map F4 to toggle search highlighting:
+    "Map F3 to toggle search highlighting:
     map <silent> <F3> :set hlsearch!<CR>:set hlsearch?<CR>
     imap <silent> <F3> <C-O>:set hlsearch!<CR><C-O>:set hlsearch?<CR>
   endif
@@ -148,6 +150,9 @@ nmap <F4> :TagbarToggle<CR>
 
 " NERDTree - A file system browser for vim
 map <F5> :NERDTreeToggle<CR>
+
+" Syntastic
+map <F6> :Errors<CR>
 
 " vim-go - Golang plugins for vim
 au FileType go nmap <Leader>gd <Plug>(go-doc)
