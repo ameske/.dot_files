@@ -30,3 +30,5 @@ fi
 function title {
     echo -ne "\033]0;"$*"\007"
 }
+
+set -o vi
