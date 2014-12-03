@@ -63,8 +63,8 @@ set showmatch
 set nowrap
 
 " Tab and Space stuff
-set shiftwidth=4    "4 is just too much, but you gotta match the code base ;-)"
-set softtabstop=4   "4 is just too much, but you gotta match the code base ;-)"
+set shiftwidth=2    "4 is just too much"
+set softtabstop=2   "4 is just too much"
 set shiftround      "Round to mod shiftwidth"
 set expandtab       "Spaces instead of tabs"
 set autoindent      "Match previous level of indentation"
