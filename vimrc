@@ -169,6 +169,7 @@ let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
+let g:go_fmt_command = "goimports"
 
 " Folding - Enable folding if your snytax supports it. This does not start enabled by default when a file is opened.
 if has('folding')
