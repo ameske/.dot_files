@@ -31,4 +31,9 @@ function title {
     echo -ne "\033]0;"$*"\007"
 }
 
+function goCrossCompileLinux {
+  export GOOS="linux"
+}
+
+
 set -o vi
