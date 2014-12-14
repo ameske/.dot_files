@@ -122,6 +122,9 @@ endif
 " Programming Specific Settings - (Syntax, Plugins, Features, etc.)
 "*******************************************************************
 
+" Pebbble library
+let g:syntastic_c_include_dirs = [ '/usr/local/Cellar/pebble-sdk/2.8.1/Pebble/include/' ]
+
 " Vim-Airline
 set laststatus=2
 let g:airline_theme='murmur'
@@ -206,6 +209,9 @@ inoremap <right> <nop>
 
 " Breaking lines with \[enter] to save the awkward into insert and out
 nmap <leader><cr> i<cr><Esc>
+
+" For when I'm dumb and open a RO file without sudo
+cnoremap sudow w !sudo tee % >/dev/null
 
 " Avoid some security problems with directory-specific vimrc files
 " This should be the last line of the file
