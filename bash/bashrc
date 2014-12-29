@@ -1,19 +1,16 @@
-# SOURCE THE STANDARD GLOBAL DEFINITIONS
+#!/bin/bash
+
+# Source the global bash files
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
-# GLOBAL (ALL MACHINES) ALIAS DEFINITIONS
-if [ -f ~/.dot_files/bash/global_aliases ]; then
-    . ~/.dot_files/bash/global_aliases
+# Local (machine specific) configurations
+if [ -f ~/.dot_files/bash/local_bashrc ]; then
+    . ~/.dot_files/bash/local_bashrc
 fi
 
-# LOCAL (MACHINE SPECIFIC) ALIAS DEFINITIONS
-if [ -f ~/.dot_files/bash/local_aliases ]; then
-    . ~/.dot_files/bash/local_aliases
-fi
-
-# COLOR THE MAN PAGES
+# Color the man pages
 export LESS_TERMCAP_mb=$'\E[01;31m'
 export LESS_TERMCAP_md=$'\E[01;31m'
 export LESS_TERMCAP_me=$'\E[0m'
@@ -22,11 +19,51 @@ export LESS_TERMCAP_so=$'\E[01;42;30m' # begin the info box
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
-# HOMEBREW
+# Set up homebrew if we are on OSX
 if [[ $( uname ) == 'Darwin' ]]; then
   export PATH=/usr/local/bin:$PATH
 fi
+
+# Set up the go tool to be on the path if we're using a manually installed go
+if [ -f /usr/local/go/bin/go ]; then
+  export PATH=$PATH:/usr/local/go/bin
+fi
  
+set -o vi
+
+# Git information in the prompt
+source ~/.dot_files/bash/git-prompt.sh
+export PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+export GIT_PS1_SHOWDIRTYSTATE='yes'
+export GIT_PS1_SHOWUPSTREAM="auto"
+export GIT_PS1_SHOWCOLORHINTS="yes"
+
+#*****************************************************#
+# Aliases
+#*****************************************************#
+if [[ $( uname ) == 'Darwin' ]]; then
+    alias ls='ls -lhG'
+    alias la='ls -lahG'
+else
+    alias ls='ls -lh --color=auto'
+    alias la='ls -lah --color=auto'
+fi
+
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# Handy navigation things
+alias c='clear'
+alias mkdir='mkdir -pv'
+
+# Set GOPATH quickly
+alias gop='export GOPATH=$(pwd)'
+
+# Quickly set a tab title
 function title {
     echo -ne "\033]0;"$*"\007"
 }
@@ -34,6 +71,5 @@ function title {
 function goCrossCompileLinux {
   export GOOS="linux"
 }
-
 
 set -o vi
