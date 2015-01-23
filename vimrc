@@ -30,6 +30,7 @@ Plugin 'gregsexton/gitv'
 Plugin 'bling/vim-airline'
 Plugin 'pangloss/vim-javascript'
 Plugin 'wting/rust.vim'
+Plugin 'cespare/vim-toml'
 " Plugin 'valloric/YouCompleteMe'
 " Plugin 'sirver/ultisnips'
 
