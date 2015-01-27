@@ -65,8 +65,11 @@ set showmatch
 set nowrap
 
 " Tab and Space stuff
-set shiftwidth=2    "4 is just too much"
-set softtabstop=2   "4 is just too much"
+"2 spaces for most languages, 4 for python
+set shiftwidth=2    
+set softtabstop=2   
+au FileType python set shiftwidth=4
+au FileType python set softtabstop=4
 set shiftround      "Round to mod shiftwidth"
 set expandtab       "Spaces instead of tabs"
 set autoindent      "Match previous level of indentation"
