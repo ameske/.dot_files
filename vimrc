@@ -1,7 +1,7 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " .vimrc
 " Author: Kyle Ames
-" Date: June 19, 2014
+" Date: January 27, 2015
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " This file isn't compatible with vi.
@@ -94,34 +94,6 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 set splitbelow
 set splitright
-
-" Some variables for convenience
-let mac_font = "Source Code Pro:h11"
-let gui_scheme = "solarized"
-let console_scheme = "default"
-
-" Set the default size of GVIM
-if has('gui_running')
-  set lines=60
-  set columns=80
-endif
-
-" Set up Mac specific settings
-if has('mac') || has('macvim')
-  if has("gui_running")
-    exec "set guifont"=.mac_font
-  endif
-endif
-
-" GUI Options
-if has('gui_running')
-  set guioptions-=T
-  exec "colorscheme ".gui_scheme
-  set background=dark
-else
-  exec "colorscheme ".console_scheme
-endif
-
 
 "*******************************************************************
 " Programming Specific Settings - (Syntax, Plugins, Features, etc.)
