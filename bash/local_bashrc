@@ -1,6 +1,0 @@
-export GOPATH=/home/ka/go
-export PATH=$PATH:$GOPATH/bin
-
-alias kgo='cd $GOPATH/src/gitlab.meerkatlab.org/px/kgo.git'
-alias gopx='cd $GOPATH/src/gitlab.meerkatlab.org/px/go-px.git'
-alias klog='cd $GOPATH/src/gitlab.meerkatlab.org/common/klog.git'
