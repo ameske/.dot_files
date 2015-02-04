@@ -31,6 +31,7 @@ Plugin 'bling/vim-airline'
 Plugin 'pangloss/vim-javascript'
 Plugin 'wting/rust.vim'
 Plugin 'cespare/vim-toml'
+Plugin 'ekalinin/Dockerfile.vim'
 " Plugin 'valloric/YouCompleteMe'
 " Plugin 'sirver/ultisnips'
 
