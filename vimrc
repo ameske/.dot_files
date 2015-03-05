@@ -33,7 +33,6 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'wting/rust.vim'
 Plugin 'cespare/vim-toml'
 Plugin 'ekalinin/Dockerfile.vim'
-" Plugin 'valloric/YouCompleteMe'
 " Plugin 'sirver/ultisnips'
 
 " Vundle is done, turn the file stuff back on
@@ -43,6 +42,9 @@ filetype plugin indent on
 "*******************************************************************
 " General Vim Settings
 "*******************************************************************
+
+" Enable fzf as our fuzzy finder
+set rtp+=~/.fzf
 
 " Clear any existing autocommands
 autocmd!
@@ -136,6 +138,9 @@ map <F5> :NERDTreeToggle<CR>
 " Syntastic
 map <F6> :Errors<CR>
 
+" Pyflakes
+map <F7> !python -m pyflakes %<CR>
+
 " vim-go - Golang plugins for vim
 au FileType go nmap <Leader>gd <Plug>(go-doc)
 au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
@@ -191,6 +196,17 @@ nmap <leader><cr> i<cr><Esc>
 
 " For when I'm dumb and open a RO file without sudo
 cnoremap sudow w !sudo tee % >/dev/null
+
+" Toggle the Snytastic error window
+function! ToggleErrors()
+    let old_last_winnr = winnr('$')
+    lclose
+    if old_last_winnr == winnr('$')
+        " Nothing was closed, open syntastic error location panel
+        Errors
+    endif
+endfunction
+nnoremap <silent> <C-e> :<C-u>call ToggleErrors()<CR>
 
 " Avoid some security problems with directory-specific vimrc files
 " This should be the last line of the file

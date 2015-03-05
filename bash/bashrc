@@ -5,6 +5,9 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+# All hail vi/vim
+set -o vi
+
 # Local (machine specific) configurations
 if [ -f ~/.dot_files/bash/local_bashrc ]; then
     . ~/.dot_files/bash/local_bashrc
@@ -29,7 +32,8 @@ if [ -f /usr/local/go/bin/go ]; then
   export PATH=$PATH:/usr/local/go/bin
 fi
  
-set -o vi
+# Source the fzf fuzzy finder bash completion
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Git information in the prompt
 source ~/.dot_files/bash/git-prompt.sh
@@ -37,6 +41,7 @@ export PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
 export GIT_PS1_SHOWDIRTYSTATE='yes'
 export GIT_PS1_SHOWUPSTREAM="auto"
 export GIT_PS1_SHOWCOLORHINTS="yes"
+
 
 #*****************************************************#
 # Aliases
@@ -63,13 +68,55 @@ alias mkdir='mkdir -pv'
 # Set GOPATH quickly
 alias gop='export GOPATH=$(pwd)'
 
+
+#****************************************************#
+# Functions
+#****************************************************#
+
+#****************************************************#
+# title 
+#
 # Quickly set a tab title
+#****************************************************#
 function title {
     echo -ne "\033]0;"$*"\007"
 }
 
+#****************************************************#
+# goCrossCompileLinux
+#
+# Sets the GOOS environment variable to Linux
+#****************************************************#
 function goCrossCompileLinux {
   export GOOS="linux"
 }
 
-set -o vi
+
+#****************************************************#
+# fe
+#
+# Opens a file using fzf to fuzzy search
+# 
+# Parameters:
+#       $1 file name to search/open
+#****************************************************#
+fe() {
+  local file
+  file=$(fzf --query="$1" --select-1 --exit-0)
+  [ -n "$file" ] && ${EDITOR:-vim} "$file"
+}
+
+#****************************************************#
+# fd
+#
+# cd to selected directory fuzzy search style
+#
+# Parameters:
+#       $1 directory name to search/cd to
+#****************************************************#
+fd() {
+  local dir
+  dir=$(find ${1:-*} -path '*/\.*' -prune \
+                  -o -type d -print 2> /dev/null | fzf +m) &&
+  cd "$dir"
+}
