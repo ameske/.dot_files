@@ -87,8 +87,8 @@ set shiftround
 set expandtab     
 set autoindent      
 
+
 " Other settings
-set list
 set title           "Show the terminal title if possible"
 set autowrite       "Save the buffer when performing commands"
 set scrolloff=3     "Save three lines above and below"
