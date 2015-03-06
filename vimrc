@@ -16,16 +16,20 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
+
+" Navigation/IDE Plugins
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
 Plugin 'majutsushi/tagbar'
 Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'fatih/vim-go'
 Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-unimpaired'
 Plugin 'gregsexton/gitv'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'edkolev/tmuxline.vim'
+
+" Syntax/Languge Plugins
+Plugin 'scrooloose/syntastic'
+Plugin 'fatih/vim-go'
 Plugin 'pangloss/vim-javascript'
 Plugin 'wting/rust.vim'
 Plugin 'cespare/vim-toml'
@@ -87,6 +91,8 @@ set shiftround
 set expandtab     
 set autoindent      
 
+" Highlight - gutter same as background
+highlight clear SignColumn
 
 " Other settings
 set title           "Show the terminal title if possible"
@@ -131,8 +137,9 @@ autocmd filetype Python set listchars=tab:>.,trail:.,extends:#,nbsp:.
 "
 " Vim-Airline
 set laststatus=2
-let g:airline_powerline_fonts=1
-let g:airline_theme='murmur'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'murmur'
 
 " Syntax and search highlighting support
 if has('syntax')
