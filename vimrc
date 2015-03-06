@@ -182,7 +182,7 @@ let g:go_fmt_command = "goimports"
 "       F5  - NERD Tree
 "       F6  - Highlight Search
 "       F7  - Git-Gutter
-"       F8  - UNMAPPED
+"       F8  - GitV
 "       F9  - UNMAPPED
 "       F10 - Spell Check
 "       F11 - Fold/Unfold Block
@@ -200,6 +200,8 @@ map <silent> <F6> :set hlsearch!<CR>:set hlsearch?<CR>
 imap <silent> <F6> <C-O>:set hlsearch!<CR><C-O>:set hlsearch?<CR>
 
 map <F7> :GitGutterToggle<CR>
+
+map <F8> :Gitv<CR>
 
 map <silent> <F10> :set spell!<CR>:set spell?<CR>
 imap <silent> <F10> <C-O>:set spell!<CR><C-O>:set spell?<CR>
