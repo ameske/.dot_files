@@ -120,6 +120,9 @@ set splitright
 " Programming Specific Settings - (Syntax, Plugins, Features, etc.)
 "*******************************************************************
 
+" Git-Gutter
+let g:gitgutter_enabled = 0
+
 " Folding - Enable folding if your snytax supports it. This does not start enabled by default when a file is opened.
 if has('folding')
   set foldmethod=syntax
@@ -178,7 +181,7 @@ let g:go_fmt_command = "goimports"
 "       F4  - Tagbar
 "       F5  - NERD Tree
 "       F6  - Highlight Search
-"       F7  - UNMAPPED
+"       F7  - Git-Gutter
 "       F8  - UNMAPPED
 "       F9  - UNMAPPED
 "       F10 - Spell Check
@@ -195,6 +198,8 @@ map <F5> :NERDTreeToggle<CR>
 
 map <silent> <F6> :set hlsearch!<CR>:set hlsearch?<CR>
 imap <silent> <F6> <C-O>:set hlsearch!<CR><C-O>:set hlsearch?<CR>
+
+map <F7> :GitGutterToggle<CR>
 
 map <silent> <F10> :set spell!<CR>:set spell?<CR>
 imap <silent> <F10> <C-O>:set spell!<CR><C-O>:set spell?<CR>
