@@ -116,6 +116,10 @@ nnoremap <C-H> <C-W><C-H>
 set splitbelow
 set splitright
 
+" Buffer Management
+nnoremap gn :bn<CR>
+nnoremap gN :bp<CR>
+
 "*******************************************************************
 " Programming Specific Settings - (Syntax, Plugins, Features, etc.)
 "*******************************************************************
