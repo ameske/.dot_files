@@ -26,6 +26,7 @@ Plugin 'gregsexton/gitv'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'edkolev/tmuxline.vim'
+Plugin 'jeetsukumaran/vim-buffergator'
 
 " Syntax/Languge Plugins
 Plugin 'scrooloose/syntastic'
@@ -114,7 +115,6 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 set splitbelow
 set splitright
-
 
 "*******************************************************************
 " Programming Specific Settings - (Syntax, Plugins, Features, etc.)
