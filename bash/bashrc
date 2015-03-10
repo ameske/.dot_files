@@ -1,37 +1,26 @@
 #!/bin/bash
+#*****************************************************#
+# Bashrc (Linux/OSX compatible)
+#
+# Author:   Kyle Ames
+# Updated:  March 20, 2014
+#*****************************************************#
 
-# Source the global bash files
+
+#*****************************************************#
+# External RC Files
+#*****************************************************#
+
+# Source the global bashrc file (if it exists)
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
-# All hail vi/vim
-set -o vi
-
-# Local (machine specific) configurations
+# Source my local, machine specific bashrc (if it exists)
 if [ -f ~/.dot_files/bash/local_bashrc ]; then
     . ~/.dot_files/bash/local_bashrc
 fi
 
-# Color the man pages
-export LESS_TERMCAP_mb=$'\E[01;31m'
-export LESS_TERMCAP_md=$'\E[01;31m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m' # end the info box
-export LESS_TERMCAP_so=$'\E[01;42;30m' # begin the info box
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[01;32m'
-
-# Set up homebrew if we are on OSX
-if [[ $( uname ) == 'Darwin' ]]; then
-  export PATH=/usr/local/bin:$PATH
-fi
-
-# Set up the go tool to be on the path if we're using a manually installed go
-if [ -f /usr/local/go/bin/go ]; then
-  export PATH=$PATH:/usr/local/go/bin
-fi
- 
 # Source the fzf fuzzy finder bash completion
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
@@ -44,8 +33,47 @@ export GIT_PS1_SHOWCOLORHINTS="yes"
 
 
 #*****************************************************#
+# PATH
+#*****************************************************#
+
+# Set up homebrew if we are on OSX
+if [[ $( uname ) == 'Darwin' ]]; then
+  export PATH=/usr/local/bin:$PATH
+fi
+
+# Set up the go tool to be on the path if we're using a manually installed go
+if [ -f /usr/local/go/bin/go ]; then
+  export PATH=$PATH:/usr/local/go/bin
+fi
+
+
+#*****************************************************#
+# Environment Variables
+#*****************************************************#
+
+# Color the man pages
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m' # end the info box
+export LESS_TERMCAP_so=$'\E[01;42;30m' # begin the info box
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
+
+#*****************************************************#
+# Options 
+#*****************************************************#
+
+# All hail vi/vim
+set -o vi
+
+
+#*****************************************************#
 # Aliases
 #*****************************************************#
+
+# Apple HAD to be different
 if [[ $( uname ) == 'Darwin' ]]; then
     alias ls='ls -lhG'
     alias la='ls -lahG'
@@ -65,7 +93,7 @@ alias egrep='egrep --color=auto'
 alias c='clear'
 alias mkdir='mkdir -pv'
 
-# Set GOPATH quickly
+# Set GOPATH quickly to the curretn directory
 alias gop='export GOPATH=$(pwd)'
 
 
@@ -73,50 +101,63 @@ alias gop='export GOPATH=$(pwd)'
 # Functions
 #****************************************************#
 
-#****************************************************#
-# title 
-#
 # Quickly set a tab title
-#****************************************************#
 function title {
     echo -ne "\033]0;"$*"\007"
 }
 
-#****************************************************#
-# goCrossCompileLinux
-#
 # Sets the GOOS environment variable to Linux
-#****************************************************#
 function goCrossCompileLinux {
   export GOOS="linux"
 }
 
-
-#****************************************************#
-# fe
-#
-# Opens a file using fzf to fuzzy search
-# 
-# Parameters:
-#       $1 file name to search/open
-#****************************************************#
+# fe - open a file 
 fe() {
   local file
   file=$(fzf --query="$1" --select-1 --exit-0)
   [ -n "$file" ] && ${EDITOR:-vim} "$file"
 }
 
-#****************************************************#
-# fd
-#
-# cd to selected directory fuzzy search style
-#
-# Parameters:
-#       $1 directory name to search/cd to
-#****************************************************#
+# fd - change directory
 fd() {
   local dir
   dir=$(find ${1:-*} -path '*/\.*' -prune \
                   -o -type d -print 2> /dev/null | fzf +m) &&
   cd "$dir"
+}
+
+# cdf - cd into the directory of the selected file
+cdf() {
+  local file
+  local dir
+  file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
+}
+
+# fs - Search file contents
+fs() {
+  grep --line-buffered --color=never -r "" * | fzf
+}
+
+# fh - repeat history
+fh() {
+  ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -re 's/^\s*[0-9]+\s*//' | writecmd -run
+}
+
+# fco - checkout git commit
+fco() {
+  local commits commit
+  commits=$(git log --pretty=oneline --abbrev-commit --reverse) &&
+  commit=$(echo "$commits" | fzf --tac +s +m -e) &&
+  git checkout $(echo "$commit" | sed "s/ .*//")
+}
+
+# ftags - search ctags
+ftags() {
+  local line
+  [ -e tags ] &&
+  line=$(
+    awk 'BEGIN { FS="\t" } !/^!/ {print toupper($4)"\t"$1"\t"$2"\t"$3}' tags |
+    cut -c1-80 | fzf --nth=1,2
+  ) && $EDITOR $(cut -f3 <<< "$line") -c "set nocst" \
+                                      -c "silent tag $(cut -f2 <<< "$line")"
 }

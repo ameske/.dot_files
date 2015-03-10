@@ -27,6 +27,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'jeetsukumaran/vim-buffergator'
+Plugin 'junegunn/vim-peekaboo'
+Plugin 'kien/ctrlp.vim'
 
 " Syntax/Languge Plugins
 Plugin 'scrooloose/syntastic'
@@ -160,16 +162,16 @@ endif
 set tags=./tags;/
 
 " vim-go - Golang plugins for vim
-au FileType go nmap <Leader>gd <Plug>(go-doc)
-au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
-au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
-au FileType go nmap gd <Plug>(go-def)
-au FileType go nmap <Leader>ds <Plug>(go-def-split)
-au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
-au FileType go nmap <Leader>dt <Plug>(go-def-tab)
-au FileType go nmap <Leader>r <Plug>(go-run)
-au FileType go nmap <Leader>b <Plug>(go-build)
-au FileType go nmap <Leader>t <Plug>(go-test)
+au FileType go nnoremap <Leader>gd <Plug>(go-doc)
+au FileType go nnoremap <Leader>gv <Plug>(go-doc-vertical)
+au FileType go nnoremap <Leader>gb <Plug>(go-doc-browser)
+au FileType go nnoremap gd <Plug>(go-def)
+au FileType go nnoremap <Leader>ds <Plug>(go-def-split)
+au FileType go nnoremap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nnoremap <Leader>dt <Plug>(go-def-tab)
+au FileType go nnoremap <Leader>r <Plug>(go-run)
+au FileType go nnoremap <Leader>b <Plug>(go-build)
+au FileType go nnoremap <Leader>t <Plug>(go-test)
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
@@ -194,30 +196,30 @@ let g:go_fmt_command = "goimports"
 "*******************************************************************
 set pastetoggle=<F2>
 
-map <F3> :FZF<CR>
+noremap <F3> :FZF<CR>
 
-map <F4> :TagbarToggle<CR>
+noremap <F4> :TagbarToggle<CR>
 
-map <F5> :NERDTreeToggle<CR>
+noremap <F5> :NERDTreeToggle<CR>
 
-map <silent> <F6> :set hlsearch!<CR>:set hlsearch?<CR>
-imap <silent> <F6> <C-O>:set hlsearch!<CR><C-O>:set hlsearch?<CR>
+noremap <silent> <F6> :set hlsearch!<CR>:set hlsearch?<CR>
+inoremap <silent> <F6> <C-O>:set hlsearch!<CR><C-O>:set hlsearch?<CR>
 
-map <F7> :GitGutterToggle<CR>
+noremap <F7> :GitGutterToggle<CR>
 
-map <F8> :Gitv<CR>
+noremap <F8> :Gitv<CR>
 
-map <silent> <F10> :set spell!<CR>:set spell?<CR>
-imap <silent> <F10> <C-O>:set spell!<CR><C-O>:set spell?<CR>
+noremap <silent> <F10> :set spell!<CR>:set spell?<CR>
+inoremap <silent> <F10> <C-O>:set spell!<CR><C-O>:set spell?<CR>
 
-map <F11> za
-imap <F11> <C-O>za
+noremap <F11> za
+inoremap <F11> <C-O>za
 
-map <F12> :call FoldColumnToggle()<CR>
+noremap <F12> :call FoldColumnToggle()<CR>
 
 
 "*******************************************************************
-" Functions
+" Functions/Commands
 "*******************************************************************
 
 " A function to toggle the fold column
@@ -239,20 +241,46 @@ function! ToggleErrors()
     endif
 endfunction
 
+" FZF Buffer Search
+function! s:line_handler(l)
+  let keys = split(a:l, ':\t')
+  exec 'buf ' . keys[0]
+  exec keys[1]
+  normal! ^zz
+endfunction
+
+" FZF Buffer Search
+function! s:buffer_lines()
+  let res = []
+  for b in filter(range(1, bufnr('$')), 'buflisted(v:val)')
+    call extend(res, map(getbufline(b,0,"$"), 'b . ":\t" . (v:key + 1) . ":\t" . v:val '))
+  endfor
+  return res
+endfunction
+
+command! FZFLines call fzf#run({
+\   'source':  <sid>buffer_lines(),
+\   'sink':    function('<sid>line_handler'),
+\   'options': '--extended --nth=3..',
+\   'down':    '60%'
+\})
 
 "*******************************************************************
-" Functions
+" Misc. Remappings
 "*******************************************************************
 let mapleader=","
 
 " Breaking lines with \[enter] to save the awkward into insert and out
-nmap <leader><cr> i<cr><Esc>
+noremap <leader><cr> i<cr><Esc>
 
 " For when I'm dumb and open a RO file without sudo
 cnoremap sudow w !sudo tee % >/dev/null
 
 " Toggle syntax errors with Ctrl+E
 nnoremap <silent> <C-e> :<C-u>call ToggleErrors()<CR>
+
+" Search for 
+nnoremap <leader><Space> :FZFLines<CR>
 
 
 " Avoid some security problems with directory-specific vimrc files
