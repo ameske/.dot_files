@@ -9,37 +9,41 @@ set nocompatible
 set t_Co=256
 
 "*******************************************************************
-" Vundle Plugin Manager - github.com/gmarik/vundle
+" Vim-Plug Plugin Manager - github.com/junegunn/vim-plug
 "*******************************************************************
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/bundle')
 
-Plugin 'gmarik/Vundle.vim'
+Plug 'gmarik/Vundle.vim'
 
-" Navigation/IDE Plugins
-Plugin 'scrooloose/nerdtree'
-Plugin 'majutsushi/tagbar'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'tpope/vim-fugitive'
-Plugin 'gregsexton/gitv'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'bling/vim-airline'
-Plugin 'edkolev/tmuxline.vim'
-Plugin 'jeetsukumaran/vim-buffergator'
-Plugin 'junegunn/vim-peekaboo'
-Plugin 'kien/ctrlp.vim'
+" IDE Plugins
+Plug 'scrooloose/nerdtree'
+Plug 'majutsushi/tagbar'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'bling/vim-airline'
+Plug 'kien/ctrlp.vim'
+Plug 'scrooloose/syntastic'
+
+" Git
+Plug 'tpope/vim-fugitive'
+Plug 'gregsexton/gitv'
+Plug 'airblade/vim-gitgutter'
+
+" Integration w/ system
+Plug 'edkolev/tmuxline.vim'
+
+" Extended Shortcuts
+Plug 'jeetsukumaran/vim-buffergator'
+Plug 'junegunn/vim-peekaboo'
+Plug 'tpope/vim-commentary'
 
 " Syntax/Languge Plugins
-Plugin 'scrooloose/syntastic'
-Plugin 'fatih/vim-go'
-Plugin 'pangloss/vim-javascript'
-Plugin 'wting/rust.vim'
-Plugin 'cespare/vim-toml'
-Plugin 'ekalinin/Dockerfile.vim'
+Plug 'fatih/vim-go'
+Plug 'pangloss/vim-javascript'
+Plug 'wting/rust.vim'
+Plug 'cespare/vim-toml'
+Plug 'ekalinin/Dockerfile.vim'
 
-call vundle#end()
-filetype plugin indent on
+call plug#end()
 
 "*******************************************************************
 " General Vim Settings
@@ -63,6 +67,9 @@ autocmd!
 
 " Don't have files trying to override this .vimrc:
 set nomodeline
+
+" Keep the cursor on the same column
+set nostartofline
 
 " Turn off spellcheck by default
 if has ('spell')
@@ -168,7 +175,7 @@ au FileType go nnoremap <Leader>gb <Plug>(go-doc-browser)
 au FileType go nnoremap gd <Plug>(go-def)
 au FileType go nnoremap <Leader>ds <Plug>(go-def-split)
 au FileType go nnoremap <Leader>dv <Plug>(go-def-vertical)
-au FileType go nnoremap <Leader>dt <Plug>(go-def-tab)
+au FileType go nnoremap <Leader>gdt <Plug>(go-def-tab)
 au FileType go nnoremap <Leader>r <Plug>(go-run)
 au FileType go nnoremap <Leader>b <Plug>(go-build)
 au FileType go nnoremap <Leader>t <Plug>(go-test)
@@ -177,7 +184,6 @@ let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_fmt_command = "goimports"
-
 
 "*******************************************************************
 " Function Key Shortcut Remappings 
