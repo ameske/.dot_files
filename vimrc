@@ -1,13 +1,16 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " .vimrc
 " Author: Kyle Ames
-" Date: March 6, 2015
+" Date: March 11, 2015
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " This file isn't compatible with vi.
+
 set nocompatible
 set t_Co=256
+let mapleader=","
 
+filetype plugin indent on
 "*******************************************************************
 " Vim-Plug Plugin Manager - github.com/junegunn/vim-plug
 "*******************************************************************
@@ -16,7 +19,6 @@ call plug#begin('~/.vim/bundle')
 Plug 'gmarik/Vundle.vim'
 
 " IDE Plugins
-Plug 'scrooloose/nerdtree'
 Plug 'majutsushi/tagbar'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'bling/vim-airline'
@@ -48,16 +50,6 @@ call plug#end()
 "*******************************************************************
 " General Vim Settings
 "*******************************************************************
-
-" The arrow keys are evil, don't let them be used
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
 
 " Enable fzf as our fuzzy finder - HIGHLY RECOMMEND THIS, IT IS LIFE CHANGING
 set rtp+=~/.fzf
@@ -95,14 +87,13 @@ set nowrap
 " Tab and Space stuff
 set shiftwidth=2    
 set softtabstop=2   
-au FileType python set shiftwidth=4
-au FileType python set softtabstop=4
 set shiftround
 set expandtab     
 set autoindent      
 
-" Highlight - gutter same as background
-highlight clear SignColumn
+
+" Change directory to the current buffer when opening files.
+set autochdir
 
 " Other settings
 set title           "Show the terminal title if possible"
@@ -117,24 +108,23 @@ if has('cmdline_info')
   set ruler
 endif
 
-" Split Management - Makes things a whole lot easier to navigate
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+" Split below and to the right when creating new splits
 set splitbelow
 set splitright
 
-" Buffer Management
-nnoremap gn :bn<CR>
-nnoremap gN :bp<CR>
 
 "*******************************************************************
 " Programming Specific Settings - (Syntax, Plugins, Features, etc.)
 "*******************************************************************
 
+" netrw - built in directory browser
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_liststyle=3
+
 " Git-Gutter
 let g:gitgutter_enabled = 0
+highlight clear SignColumn
 
 " Folding - Enable folding if your snytax supports it. This does not start enabled by default when a file is opened.
 if has('folding')
@@ -149,7 +139,10 @@ endif
 let g:syntastic_c_include_dirs = [ '/usr/local/Cellar/pebble-sdk/2.8.1/Pebble/include/' ]
 
 " Python - Show whitespace so that we don't get burned
-autocmd filetype Python set listchars=tab:>.,trail:.,extends:#,nbsp:.
+au filetype Python set listchars=tab:>.,trail:.,extends:#,nbsp:.
+au FileType python set shiftwidth=4
+au FileType python set softtabstop=4
+
 "
 " Vim-Airline
 set laststatus=2
@@ -169,21 +162,23 @@ endif
 set tags=./tags;/
 
 " vim-go - Golang plugins for vim
-au FileType go nnoremap <Leader>gd <Plug>(go-doc)
-au FileType go nnoremap <Leader>gv <Plug>(go-doc-vertical)
-au FileType go nnoremap <Leader>gb <Plug>(go-doc-browser)
-au FileType go nnoremap gd <Plug>(go-def)
-au FileType go nnoremap <Leader>ds <Plug>(go-def-split)
-au FileType go nnoremap <Leader>dv <Plug>(go-def-vertical)
-au FileType go nnoremap <Leader>gdt <Plug>(go-def-tab)
-au FileType go nnoremap <Leader>r <Plug>(go-run)
-au FileType go nnoremap <Leader>b <Plug>(go-build)
-au FileType go nnoremap <Leader>t <Plug>(go-test)
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+au FileType go nmap gd <Plug>(go-def)
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>gdt <Plug>(go-def-tab)
+au FileType go nmap <Leader>r <Plug>(go-run)
+au FileType go nmap <Leader>b <Plug>(go-build)
+au FileType go nmap <Leader>t <Plug>(go-test)
+au FileType go nmap <Leader>s <Plug>(go-implements)
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_fmt_command = "goimports"
+
 
 "*******************************************************************
 " Function Key Shortcut Remappings 
@@ -200,28 +195,35 @@ let g:go_fmt_command = "goimports"
 "       F11 - Fold/Unfold Block
 "       F12 - Show/Hide Fold Column
 "*******************************************************************
+
 set pastetoggle=<F2>
 
-noremap <F3> :FZF<CR>
+nnoremap <F3> :FZF<CR>
+inoremap <F3> <esc>:FZF<CR>
 
-noremap <F4> :TagbarToggle<CR>
+nnoremap <F4> :TagbarToggle<CR>
+inoremap <F5> <esc>:TagbarToggle<CR>
 
-noremap <F5> :NERDTreeToggle<CR>
+nnoremap <F5> :call ToggleVExplorer()<CR>
+inoremap <F5> <esc>:call ToggleVExplorer()<CR>
 
-noremap <silent> <F6> :set hlsearch!<CR>:set hlsearch?<CR>
+nnoremap <silent> <F6> :set hlsearch!<CR>:set hlsearch?<CR>
 inoremap <silent> <F6> <C-O>:set hlsearch!<CR><C-O>:set hlsearch?<CR>
 
-noremap <F7> :GitGutterToggle<CR>
+nnoremap <F7> :GitGutterToggle<CR>
+inoremap <F7> <esc>:GitGutterToggle<CR>
 
-noremap <F8> :Gitv<CR>
+nnoremap <F8> :Gitv<CR>
+inoremap <F8> <esc>:Gitv<CR>
 
-noremap <silent> <F10> :set spell!<CR>:set spell?<CR>
+nnoremap <silent> <F10> :set spell!<CR>:set spell?<CR>
 inoremap <silent> <F10> <C-O>:set spell!<CR><C-O>:set spell?<CR>
 
-noremap <F11> za
+nnoremap <F11> za
 inoremap <F11> <C-O>za
 
-noremap <F12> :call FoldColumnToggle()<CR>
+nnoremap <F12> :call FoldColumnToggle()<CR>
+inoremap <F12> <esc>:call FoldColumnToggle()<CR>
 
 
 "*******************************************************************
@@ -271,10 +273,44 @@ command! FZFLines call fzf#run({
 \   'down':    '60%'
 \})
 
+
+" Toggle netrw
+function! ToggleVExplorer()
+  if exists("t:expl_buf_num")
+      let expl_win_num = bufwinnr(t:expl_buf_num)
+      if expl_win_num != -1
+          let cur_win_nr = winnr()
+          exec expl_win_num . 'wincmd w'
+          close
+          exec cur_win_nr . 'wincmd w'
+          unlet t:expl_buf_num
+      else
+          unlet t:expl_buf_num
+      endif
+  else
+      exec '1wincmd w'
+      Vexplore
+      let t:expl_buf_num = bufnr("%")
+  endif
+endfunction
+
 "*******************************************************************
-" Misc. Remappings
+" Custom Mappings 
 "*******************************************************************
-let mapleader=","
+
+" The arrow keys are evil, don't let them be used
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+
+" Buffer Management
+nnoremap gn :bn<CR>
+nnoremap gN :bp<CR>
 
 " Breaking lines with \[enter] to save the awkward into insert and out
 noremap <leader><cr> i<cr><Esc>
@@ -285,9 +321,17 @@ cnoremap sudow w !sudo tee % >/dev/null
 " Toggle syntax errors with Ctrl+E
 nnoremap <silent> <C-e> :<C-u>call ToggleErrors()<CR>
 
-" Search for 
+" Search the file using the fuzzy finder
 nnoremap <leader><Space> :FZFLines<CR>
 
+" Save 
+nnoremap <C-s> :update<CR>
+inoremap <C-s> <C-O>:update<cr>
+
+" Quit
+inoremap <C-Q> <esc>:q<cr>
+nnoremap <C-Q> :q<cr>
+vnoremap <C-Q> <esc>
 
 " Avoid some security problems with directory-specific vimrc files
 " This should be the last line of the file

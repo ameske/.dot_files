@@ -11,17 +11,23 @@
 # External RC Files
 #*****************************************************#
 
-# Source the global bashrc file (if it exists)
+# System default bashrc
 if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
+  . /etc/bashrc
 fi
 
-# Source my local, machine specific bashrc (if it exists)
+# Bash completion 
+if [ -f /etc/bash_completion ]; then
+  . /etc/bash_completion
+fi
+
+# Local, machine specific bashrc
 if [ -f ~/.dot_files/bash/local_bashrc ]; then
-    . ~/.dot_files/bash/local_bashrc
+  . ~/.dot_files/bash/local_bashrc
 fi
 
-# Source the fzf fuzzy finder bash completion
+
+# FZF fuzzy finder bash completion
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Git information in the prompt
@@ -33,8 +39,24 @@ export GIT_PS1_SHOWCOLORHINTS="yes"
 
 
 #*****************************************************#
-# PATH
+# Options 
 #*****************************************************#
+
+# All hail vi/vim
+set -o vi
+
+# Disable CTRL-S and CTRL-Q
+[[ $- =~ i ]] && stty -ixoff -ixon
+
+
+#*****************************************************#
+# Environment Variables
+#*****************************************************#
+
+export HISTCONTROL=ignoreboth:erasedups
+export HISTTIMEFORMAT="%Y/%m/%d %H:%M:%S:   "
+
+export EDITOR=vim
 
 # Set up homebrew if we are on OSX
 if [[ $( uname ) == 'Darwin' ]]; then
@@ -46,11 +68,6 @@ if [ -f /usr/local/go/bin/go ]; then
   export PATH=$PATH:/usr/local/go/bin
 fi
 
-
-#*****************************************************#
-# Environment Variables
-#*****************************************************#
-
 # Color the man pages
 export LESS_TERMCAP_mb=$'\E[01;31m'
 export LESS_TERMCAP_md=$'\E[01;31m'
@@ -60,13 +77,6 @@ export LESS_TERMCAP_so=$'\E[01;42;30m' # begin the info box
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
-
-#*****************************************************#
-# Options 
-#*****************************************************#
-
-# All hail vi/vim
-set -o vi
 
 
 #*****************************************************#
@@ -92,6 +102,12 @@ alias egrep='egrep --color=auto'
 # Handy navigation things
 alias c='clear'
 alias mkdir='mkdir -pv'
+
+# cd shortcuts
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
 
 # Set GOPATH quickly to the curretn directory
 alias gop='export GOPATH=$(pwd)'
