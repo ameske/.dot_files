@@ -184,10 +184,10 @@ let g:go_fmt_command = "goimports"
 " Function Key Shortcut Remappings 
 "       F1  - Help
 "       F2  - Paste Mode
-"       F3  - FZF
+"       F3  - Highlight Search
 "       F4  - Tagbar
 "       F5  - NERD Tree
-"       F6  - Highlight Search
+"       F6  - FZF
 "       F7  - Git-Gutter
 "       F8  - GitV
 "       F9  - UNMAPPED
@@ -198,8 +198,8 @@ let g:go_fmt_command = "goimports"
 
 set pastetoggle=<F2>
 
-nnoremap <F3> :FZF<CR>
-inoremap <F3> <esc>:FZF<CR>
+nnoremap <silent> <F3> :set hlsearch!<CR>:set hlsearch?<CR>
+inoremap <silent> <F3> <C-O>:set hlsearch!<CR><C-O>:set hlsearch?<CR>
 
 nnoremap <F4> :TagbarToggle<CR>
 inoremap <F5> <esc>:TagbarToggle<CR>
@@ -207,14 +207,17 @@ inoremap <F5> <esc>:TagbarToggle<CR>
 nnoremap <F5> :call ToggleVExplorer()<CR>
 inoremap <F5> <esc>:call ToggleVExplorer()<CR>
 
-nnoremap <silent> <F6> :set hlsearch!<CR>:set hlsearch?<CR>
-inoremap <silent> <F6> <C-O>:set hlsearch!<CR><C-O>:set hlsearch?<CR>
+nnoremap <F6> :FZF ~<CR>
+inoremap <F6> <esc>:FZF ~<CR>
 
 nnoremap <F7> :GitGutterToggle<CR>
 inoremap <F7> <esc>:GitGutterToggle<CR>
 
 nnoremap <F8> :Gitv<CR>
 inoremap <F8> <esc>:Gitv<CR>
+
+nnoremap <F9> :FZFLines<CR>
+inoremap <F9> <esc>:FZFLines<CR>
 
 nnoremap <silent> <F10> :set spell!<CR>:set spell?<CR>
 inoremap <silent> <F10> <C-O>:set spell!<CR><C-O>:set spell?<CR>
