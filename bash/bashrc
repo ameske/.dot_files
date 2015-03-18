@@ -68,6 +68,11 @@ if [ -f /usr/local/go/bin/go ]; then
   export PATH=$PATH:/usr/local/go/bin
 fi
 
+# Add custom scripts/programs to the path
+if [ -d $HOME/.dot_files/scripts ]; then
+  export PATH=$PATH:$HOME/.dot_files/scripts
+fi
+
 # Color the man pages
 export LESS_TERMCAP_mb=$'\E[01;31m'
 export LESS_TERMCAP_md=$'\E[01;31m'
@@ -76,7 +81,6 @@ export LESS_TERMCAP_se=$'\E[0m' # end the info box
 export LESS_TERMCAP_so=$'\E[01;42;30m' # begin the info box
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
-
 
 
 #*****************************************************#
