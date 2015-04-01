@@ -4,13 +4,11 @@
 " Date: March 11, 2015
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" This file isn't compatible with vi.
-
 set nocompatible
 set t_Co=256
 let mapleader=","
-
 filetype plugin indent on
+
 "*******************************************************************
 " Vim-Plug Plugin Manager - github.com/junegunn/vim-plug
 "*******************************************************************
@@ -51,6 +49,11 @@ call plug#end()
 " General Vim Settings
 "*******************************************************************
 
+" Use Sauce Code Pro 11 in the GUI as well 
+if has('gui_running')
+  set guifont=Sauce\ Code\ Powerline:h12
+endif
+
 " Enable fzf as our fuzzy finder - HIGHLY RECOMMEND THIS, IT IS LIFE CHANGING
 set rtp+=~/.fzf
 
@@ -90,7 +93,6 @@ set softtabstop=2
 set shiftround
 set expandtab     
 set autoindent      
-
 
 " Change directory to the current buffer when opening files.
 set autochdir
