@@ -14,8 +14,6 @@ filetype plugin indent on
 "*******************************************************************
 call plug#begin('~/.vim/bundle')
 
-Plug 'gmarik/Vundle.vim'
-
 " IDE Plugins
 Plug 'majutsushi/tagbar'
 Plug 'christoomey/vim-tmux-navigator'
