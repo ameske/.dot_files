@@ -278,6 +278,29 @@ command! FZFLines call fzf#run({
 \})
 
 
+"*******************************************************************
+" FZFTags
+"
+" Performs an fzf search of a project's tags file
+"*******************************************************************
+command! -bar FZFTags if !empty(tagfiles()) | call fzf#run({
+\   'source': "sed '/^\\!/d;s/\t.*//' " . join(tagfiles()) . ' | uniq',
+\   'sink':   'tag',
+\ }) | else | echo 'Preparing tags' | call system('ctags -R') | FZFTag | endif
+
+
+"*******************************************************************
+" FZFTags
+"
+" Performs an fzf search of a project's tags file
+"*******************************************************************
+command! FZFTagFile if !empty(tagfiles()) | call fzf#run({
+\   'source': "cat " . tagfiles()[0] . ' | grep "' . expand('%:@') . '"' . " | sed -e '/^\\!/d;s/\t.*//' ". ' |  uniq',
+\   'sink':   'tag',
+\   'options':  '+m',
+\   'left':     60,
+\ }) | else | echo 'No tags' | endif
+
 " Toggle netrw
 function! ToggleVExplorer()
   if exists("t:expl_buf_num")
