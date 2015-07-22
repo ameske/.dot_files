@@ -150,7 +150,7 @@ fd() {
 cdf() {
   local file
   local dir
-  file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
+  cd ~ && file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
 }
 
 # fs - Search file contents
@@ -181,3 +181,22 @@ ftags() {
   ) && $EDITOR $(cut -f3 <<< "$line") -c "set nocst" \
                                       -c "silent tag $(cut -f2 <<< "$line")"
 }
+# fkill - kill process
+fkill() {
+  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+
+  if [ "x$pid" != "x" ]
+  then
+    kill -${1:-9} $pid
+  fi
+}
+
+# cdg - bookmark fuzzy finding. list path bookmarks in .cdg_paths
+unalias cdg 2> /dev/null
+cdg() {
+   local dest_dir=$(cdscuts_glob_echo | fzf )
+   if [[ $dest_dir != '' ]]; then
+      cd "$dest_dir"
+   fi
+}
+export -f cdg > /dev/null
