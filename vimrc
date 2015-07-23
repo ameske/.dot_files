@@ -122,6 +122,39 @@ let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 let g:netrw_liststyle=3
 
+" cscope and ctags integration
+if has("cscope")
+  set cscopetag cscopeverbose
+
+  if has('quickfix')
+    set cscopequickfix=s-,c-,d-,i-,t-,e-
+  endif
+
+  set csto=0
+
+  cnoreabbrev csa cs add
+  cnoreabbrev csf cs find
+  cnoreabbrev csk cs kill
+  cnoreabbrev csr cs reset
+  cnoreabbrev css cs show
+  cnoreabbrev csh cs help
+
+  " emulates 'find the ctags' file for cscope
+  function! LoadCscope()
+    let db = findfile("cscope.out", ".;")
+    if (!empty(db))
+      let path = strpart(db, 0, match(db, "/cscope.out$"))
+      set nocscopeverbose " suppress 'duplicate connection' error
+      exe "cs add " . db . " " . path
+      set cscopeverbose
+    endif
+  endfunction
+  call LoadCscope()
+endif
+
+" ctags
+set tags=./tags;/
+
 " Git-Gutter
 let g:gitgutter_enabled = 0
 highlight clear SignColumn
@@ -143,7 +176,6 @@ au filetype Python set listchars=tab:>.,trail:.,extends:#,nbsp:.
 au FileType python set shiftwidth=4
 au FileType python set softtabstop=4
 
-"
 " Vim-Airline
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
@@ -158,8 +190,6 @@ if has('syntax')
   endif
 endif
 
-" Tagbar - Visual for Ctags
-set tags=./tags;/
 
 " vim-go - Golang plugins for vim
 au FileType go nmap <Leader>gd <Plug>(go-doc)
