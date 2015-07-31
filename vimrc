@@ -6,6 +6,11 @@
 
 set nocompatible
 set t_Co=256
+
+"check if we are at the dayjob
+call system('which p4')
+let system_has_perforce = !v:shell_error
+
 let mapleader=","
 filetype plugin indent on
 
@@ -20,6 +25,10 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'bling/vim-airline'
 Plug 'kien/ctrlp.vim'
 Plug 'scrooloose/syntastic'
+Plug 'scrooloose/NERDtree'
+Plug 'tpope/vim-dispatch'
+Plug 'moll/vim-bbye'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -116,11 +125,6 @@ set splitright
 "*******************************************************************
 " Programming Specific Settings - (Syntax, Plugins, Features, etc.)
 "*******************************************************************
-
-" netrw - built in directory browser
-let g:netrw_browse_split = 4
-let g:netrw_altv = 1
-let g:netrw_liststyle=3
 
 " cscope and ctags integration
 if has("cscope")
@@ -226,7 +230,6 @@ let g:go_fmt_command = "goimports"
 "       F11 - Fold/Unfold Block
 "       F12 - Show/Hide Fold Column
 "*******************************************************************
-
 set pastetoggle=<F2>
 
 nnoremap <silent> <F3> :set hlsearch!<CR>:set hlsearch?<CR>
@@ -235,30 +238,28 @@ inoremap <silent> <F3> <C-O>:set hlsearch!<CR><C-O>:set hlsearch?<CR>
 nnoremap <F4> :TagbarToggle<CR>
 inoremap <F5> <esc>:TagbarToggle<CR>
 
-nnoremap <F5> :call ToggleVExplorer()<CR>
-inoremap <F5> <esc>:call ToggleVExplorer()<CR>
+nnoremap <F5> :NERDTreeToggle<CR>
+inoremap <F5> <esc>:NERDTreeToggle<CR>
 
 nnoremap <F6> :FZF ~<CR>
 inoremap <F6> <esc>:FZF ~<CR>
 
-nnoremap <F7> :GitGutterToggle<CR>
-inoremap <F7> <esc>:GitGutterToggle<CR>
+nnoremap <F7> :FZFLines<CR>
+inoremap <F7> <esc>:FZFLines<CR>
 
-nnoremap <F8> :Gitv<CR>
-inoremap <F8> <esc>:Gitv<CR>
+nnoremap <silent> <F8> :FZFTags
+inoremap <silent> <F8> <esc>:FZFTags
 
-nnoremap <F9> :FZFLines<CR>
-inoremap <F9> <esc>:FZFLines<CR>
-
-nnoremap <silent> <F10> :set spell!<CR>:set spell?<CR>
-inoremap <silent> <F10> <C-O>:set spell!<CR><C-O>:set spell?<CR>
+if(system_has_perforce)
+  command Edit silent ! p4 edit %
+  nnoremap <F9> :Edit<CR>:e!<CR>:redraw!<CR>
+endif
 
 nnoremap <F11> za
 inoremap <F11> <C-O>za
 
 nnoremap <F12> :call FoldColumnToggle()<CR>
 inoremap <F12> <esc>:call FoldColumnToggle()<CR>
-
 
 "*******************************************************************
 " Functions/Commands
@@ -331,25 +332,6 @@ command! FZFTagFile if !empty(tagfiles()) | call fzf#run({
 \   'left':     60,
 \ }) | else | echo 'No tags' | endif
 
-" Toggle netrw
-function! ToggleVExplorer()
-  if exists("t:expl_buf_num")
-      let expl_win_num = bufwinnr(t:expl_buf_num)
-      if expl_win_num != -1
-          let cur_win_nr = winnr()
-          exec expl_win_num . 'wincmd w'
-          close
-          exec cur_win_nr . 'wincmd w'
-          unlet t:expl_buf_num
-      else
-          unlet t:expl_buf_num
-      endif
-  else
-      exec '1wincmd w'
-      Vexplore
-      let t:expl_buf_num = bufnr("%")
-  endif
-endfunction
 
 "*******************************************************************
 " Custom Mappings 
@@ -368,6 +350,10 @@ inoremap <right> <nop>
 " Buffer Management
 nnoremap gn :bn<CR>
 nnoremap gN :bp<CR>
+
+" Tab Management
+nnoremap gnt :tabnext<CR>
+nnoremap gNt :tabprev<CR>
 
 " Breaking lines with \[enter] to save the awkward into insert and out
 noremap <leader><cr> i<cr><Esc>
