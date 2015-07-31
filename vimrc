@@ -25,7 +25,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'bling/vim-airline'
 Plug 'kien/ctrlp.vim'
 Plug 'scrooloose/syntastic'
-Plug 'scrooloose/NERDtree'
+Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-dispatch'
 Plug 'moll/vim-bbye'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
