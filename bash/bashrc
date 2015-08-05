@@ -138,12 +138,25 @@ fe() {
   [ -n "$file" ] && ${EDITOR:-vim} "$file"
 }
 
+# feg - open a file, searching from home
+feg() {
+  local file
+  file=$(fzf --query="~" --exit-0)
+  [ -n "$file" ] && ${EDITOR:-vim} "$file"
+}
+
 # fd - change directory
 fd() {
   local dir
   dir=$(find ${1:-*} -path '*/\.*' -prune \
                   -o -type d -print 2> /dev/null | fzf +m) &&
   cd "$dir"
+}
+
+# fda - change directory including hidden directories
+fda() {
+  local dir
+  dir=$(find ${1:-.} -type d 2> /dev/null | fzf +m) && cd "$dir"
 }
 
 # cdf - cd into the directory of the selected file

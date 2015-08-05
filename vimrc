@@ -9,7 +9,7 @@ set t_Co=256
 
 "check if we are at the dayjob
 call system('which p4')
-let system_has_perforce = !v:shell_error
+let at_work = !v:shell_error
 
 let mapleader=","
 filetype plugin indent on
@@ -26,7 +26,6 @@ Plug 'bling/vim-airline'
 Plug 'kien/ctrlp.vim'
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
-Plug 'tpope/vim-dispatch'
 Plug 'moll/vim-bbye'
 Plug 'junegunn/fzf', { 'dir': '~/.dot_files/fzf', 'do': 'yes \| ./install' }
 
@@ -36,7 +35,9 @@ Plug 'gregsexton/gitv'
 Plug 'airblade/vim-gitgutter'
 
 " Integration w/ system
-Plug 'edkolev/tmuxline.vim'
+if !at_work
+  Plug 'edkolev/tmuxline.vim'
+endif
 
 " Extended Shortcuts
 Plug 'jeetsukumaran/vim-buffergator'
@@ -172,8 +173,13 @@ if has('folding')
   set foldlevel=255
 endif
 
-" Pebbble library
-let g:syntastic_c_include_dirs = [ '/usr/local/Cellar/pebble-sdk/2.8.1/Pebble/include/' ]
+" Syntastic - C Include Files 
+if at_work
+  source /home2/kyle.ames/.vim/fireeye.vim
+endif
+if !at_work
+  let g:syntastic_c_include_dirs = [ '/usr/local/Cellar/pebble-sdk/2.8.1/Pebble/include/' ]
+endif
 
 " Python - Show whitespace so that we don't get burned
 au filetype Python set listchars=tab:>.,trail:.,extends:#,nbsp:.
@@ -183,7 +189,11 @@ au FileType python set softtabstop=4
 " Vim-Airline
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
+if !at_work
+  let g:airline_powerline_fonts = 1
+else
+  let g:airline_powerline_fonts = 0
+endif
 let g:airline_theme = 'murmur'
 
 " Syntax and search highlighting support
@@ -196,6 +206,7 @@ endif
 
 
 " vim-go - Golang plugins for vim
+let g:go_bin_path = $HOME."/.gobin/"
 au FileType go nmap <Leader>gd <Plug>(go-doc)
 au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
 au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
@@ -223,10 +234,10 @@ let g:go_fmt_command = "goimports"
 "       F4  - Tagbar
 "       F5  - NERD Tree
 "       F6  - FZF
-"       F7  - Git-Gutter
-"       F8  - GitV
-"       F9  - UNMAPPED
-"       F10 - Spell Check
+"       F7  - FZF Grep
+"       F8  - FZF Tag Search
+"       F9  - Perforce Edit / GitV (if at work or home)
+"       F10 - Git-Gutter
 "       F11 - Fold/Unfold Block
 "       F12 - Show/Hide Fold Column
 "*******************************************************************
@@ -250,10 +261,13 @@ inoremap <F7> <esc>:FZFLines<CR>
 nnoremap <silent> <F8> :FZFTags
 inoremap <silent> <F8> <esc>:FZFTags
 
-if(system_has_perforce)
+if(at_work)
   command Edit silent ! p4 edit %
   nnoremap <F9> :Edit<CR>:e!<CR>:redraw!<CR>
 endif
+
+nnoremap <F10> :GitGutterToggle <CR>
+inoremap <F10> <esc>:GitGutterToggle <CR>
 
 nnoremap <F11> za
 inoremap <F11> <C-O>za
