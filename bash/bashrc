@@ -31,12 +31,25 @@ fi
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Git information in the prompt
-source ~/.dot_files/bash/git-prompt.sh
-export PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
-export GIT_PS1_SHOWDIRTYSTATE='yes'
-export GIT_PS1_SHOWUPSTREAM="auto"
-export GIT_PS1_SHOWCOLORHINTS="yes"
 
+function __setprompt {
+  source ~/.dot_files/bash/git-prompt.sh
+  export GIT_PS1_SHOWCOLORHINTS="yes"
+  export GIT_PS1_SHOWDIRTYSTATE='yes'
+  export GIT_PS1_SHOWUPSTREAM="auto"
+  local BLUE="\[\033[0;34m\]"
+  local NO_COLOUR="\[\033[0m\]"
+  local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
+  local SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
+  if [ $SSH2_IP ] || [ $SSH_IP ] ; then
+    PS1='[$(date +%H:%M)][ssh][\u@\H:\W]$(__git_ps1 " (%s)")\$ '
+  else
+    PS1='[$(date +%H:%M)][\u@\h:\W]$(__git_ps1 " (%s)")\$ '
+  fi
+  PS2=">"
+  PS4="+"
+}
+__setprompt
 
 #*****************************************************#
 # Options 
@@ -44,6 +57,9 @@ export GIT_PS1_SHOWCOLORHINTS="yes"
 
 # All hail vi/vim
 set -o vi
+
+# Don't overwrite existing files
+shopt -oq noclobber
 
 # Disable CTRL-S and CTRL-Q
 [[ $- =~ i ]] && stty -ixoff -ixon
