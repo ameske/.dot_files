@@ -26,30 +26,26 @@ if [ -f ~/.dot_files/bash/local_bashrc ]; then
   . ~/.dot_files/bash/local_bashrc
 fi
 
-
 # FZF fuzzy finder bash completion
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-# Git information in the prompt
+# Git prompt
+source ~/.dot_files/bash/git-prompt.sh
 
-function __setprompt {
-  source ~/.dot_files/bash/git-prompt.sh
-  export GIT_PS1_SHOWCOLORHINTS="yes"
-  export GIT_PS1_SHOWDIRTYSTATE='yes'
-  export GIT_PS1_SHOWUPSTREAM="auto"
-  local BLUE="\[\033[0;34m\]"
-  local NO_COLOUR="\[\033[0m\]"
-  local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
-  local SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
-  if [ $SSH2_IP ] || [ $SSH_IP ] ; then
-    PS1='[$(date +%H:%M)][ssh][\u@\H:\W]$(__git_ps1 " (%s)")\$ '
-  else
-    PS1='[$(date +%H:%M)][\u@\h:\W]$(__git_ps1 " (%s)")\$ '
+# determine if we are in a perforce scm directory directory
+function p4c {
+  if hash p4 2>/dev/null; then
+    if [ "`p4 set | grep "P4CLIENT" | awk '{print $1}' | sed s/P4CLIENT=//`" != "" ]; then
+      echo "[p4] "
+      return
+    else
+      echo ""
+      return
+    fi
   fi
-  PS2=">"
-  PS4="+"
+
+  echo ""
 }
-__setprompt
 
 #*****************************************************#
 # Options 
@@ -69,10 +65,29 @@ shopt -oq noclobber
 # Environment Variables
 #*****************************************************#
 
+# Don't keep duplicate commands in history. Track the time.
 export HISTCONTROL=ignoreboth:erasedups
 export HISTTIMEFORMAT="%Y/%m/%d %H:%M:%S:   "
 
-export EDITOR=vim
+# Configure the git prompt function
+export GIT_PS1_SHOWCOLORHINTS='true'
+export GIT_PS1_SHOWDIRTYSTATE='true'
+export GIT_PS1_SHOWSTASHSTATE='true'
+export GIT_PS1_SHOWUNTRACKEDFILES='true'
+export GIT_PS1_SHOWUPSTREAM='verbose'
+
+# Determine if we are currently on a remote machine
+SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
+SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
+
+# Set our prompt up
+if [ $SSH2_IP ] || [ $SSH_IP ] ; then
+  #PS1='[$(date +%H:%M)][ssh]$(p4c)[\u@\H:\W]$(__git_ps1 "[git] (%s)")\$ '
+  PROMPT_COMMAND='__git_ps1 "[$(date +%H:%M)] [ssh] $(p4c)[\u@\H: \W]" "\$ "'
+else
+  #PS1='[$(date +%H:%M)]$(p4c)[\u@\h:\W]$(__git_ps1 "[git] (%s)")\$ '
+  PROMPT_COMMAND='__git_ps1 "[$(date +%H:%M)] $(p4c)[\u@\H: \W]" "\$ "'
+fi
 
 # Set up homebrew if we are on OSX
 if [[ $( uname ) == 'Darwin' ]]; then
@@ -88,6 +103,9 @@ fi
 if [ -d $HOME/.dot_files/scripts ]; then
   export PATH=$PATH:$HOME/.dot_files/scripts
 fi
+
+# The more vim, the merrier
+export EDITOR=vim
 
 # Color the man pages
 export LESS_TERMCAP_mb=$'\E[01;31m'
