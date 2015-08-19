@@ -236,8 +236,8 @@ let g:go_fmt_command = "goimports"
 "       F6  - FZF
 "       F7  - FZF Grep
 "       F8  - FZF Tag Search
-"       F9  - Perforce Edit / GitV (if at work or home)
-"       F10 - Git-Gutter
+"       F9  - Perforce Edit / Git-V
+"       F10 - Gitv
 "       F11 - Fold/Unfold Block
 "       F12 - Show/Hide Fold Column
 "*******************************************************************
@@ -264,10 +264,14 @@ inoremap <silent> <F8> <esc>:FZFTags
 if(at_work)
   command Edit silent ! p4 edit %
   nnoremap <F9> :Edit<CR>:e!<CR>:redraw!<CR>
+  inoremap <F9> <esc>:Edit<CR>:e!<CR>:redraw!<CR>
+else
+  nnoremap <F9> :GitGutterToggle <CR>
+  inoremap <F9> <esc>:GitGutterToggle <CR>
 endif
 
-nnoremap <F10> :GitGutterToggle <CR>
-inoremap <F10> <esc>:GitGutterToggle <CR>
+nnoremap <F10> :Gitv
+inoremap <F10> <esc>:Gitv
 
 nnoremap <F11> za
 inoremap <F11> <C-O>za
