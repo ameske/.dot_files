@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # Symlink important dot files to their concrete versions in the repo
-ln -s ~/.dot_files/bash/bashrc .bashrc
-ln -s ~/.dot_files/vimrc .vimrc
-ln -s ~/.dot_files/tmux.conf .tmux.conf
+ln -s ~/.dot_files/bash/bashrc ~/.bashrc
+ln -s ~/.dot_files/vimrc ~/.vimrc
+ln -s ~/.dot_files/tmux.conf ~/.tmux.conf
 if [ $( uname ) == 'Darwin' ]; then
-    ln -s ~/.dot_files/osx/profile .profile
+    ln -s ~/.dot_files/osx/profile ~/.profile
 fi
 
 # Get fzf if we haven't yet
 if [ ! -d ~/.fzf ]; then
-  gitt clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
   ~/.fzf/install
 fi
 

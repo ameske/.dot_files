@@ -29,6 +29,9 @@ fi
 # FZF fuzzy finder bash completion
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+# NOTE: Be sure to source the installed git's bash completion and git-prompt
+# in local_bashrc
+
 # determine if we are in a perforce scm directory directory
 function p4c {
   if hash p4 2>/dev/null; then
