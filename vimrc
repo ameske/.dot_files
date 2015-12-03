@@ -27,7 +27,7 @@ Plug 'kien/ctrlp.vim'
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
 Plug 'moll/vim-bbye'
-Plug 'junegunn/fzf', { 'dir': '~/.dot_files/fzf', 'do': 'yes \| ./install' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " Git
 Plug 'tpope/vim-fugitive'

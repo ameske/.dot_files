@@ -8,13 +8,7 @@ if [ $( uname ) == 'Darwin' ]; then
     ln -s ~/.dot_files/osx/profile ~/.profile
 fi
 
-# Get fzf if we haven't yet
-if [ ! -d ~/.fzf ]; then
-  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-  ~/.fzf/install
-fi
-
-# Get vim-plug if we haven't yet
+# Install vim and friends
 if [ ! -f ~/.vim/autoload/plug.vim ]; then
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
