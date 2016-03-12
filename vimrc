@@ -47,7 +47,7 @@ Plug 'tpope/vim-commentary'
 " Syntax/Languge Plugins
 Plug 'fatih/vim-go'
 Plug 'pangloss/vim-javascript'
-Plug 'wting/rust.vim'
+Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
 Plug 'ekalinin/Dockerfile.vim'
 
