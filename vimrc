@@ -194,7 +194,6 @@ if !at_work
 else
   let g:airline_powerline_fonts = 0
 endif
-let g:airline_theme = 'murmur'
 
 " Syntax and search highlighting support
 if has('syntax')
