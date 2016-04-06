@@ -22,8 +22,8 @@ if [ -f /etc/bash_completion ]; then
 fi
 
 # Local, machine specific bashrc
-if [ -f ~/.dot_files/bash/local_bashrc ]; then
-  . ~/.dot_files/bash/local_bashrc
+if [ -f ~/.bashrc_local ]; then
+  . ~/.bashrc_local
 fi
 
 # FZF fuzzy finder bash completion
