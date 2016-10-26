@@ -6,10 +6,7 @@
 
 set nocompatible
 set t_Co=256
-
-"check if we are at the dayjob
-call system('which p4')
-let at_work = !v:shell_error
+set background=light
 
 let mapleader=","
 filetype plugin indent on
@@ -34,11 +31,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv'
 Plug 'airblade/vim-gitgutter'
 
-" Integration w/ system
-if !at_work
-  Plug 'edkolev/tmuxline.vim'
-endif
-
 " Extended Shortcuts
 Plug 'jeetsukumaran/vim-buffergator'
 Plug 'junegunn/vim-peekaboo'
@@ -46,10 +38,7 @@ Plug 'tpope/vim-commentary'
 
 " Syntax/Languge Plugins
 Plug 'fatih/vim-go'
-Plug 'pangloss/vim-javascript'
 Plug 'rust-lang/rust.vim'
-Plug 'cespare/vim-toml'
-Plug 'ekalinin/Dockerfile.vim'
 
 call plug#end()
 
@@ -122,7 +111,6 @@ endif
 set splitbelow
 set splitright
 
-
 "*******************************************************************
 " Programming Specific Settings - (Syntax, Plugins, Features, etc.)
 "*******************************************************************
@@ -173,14 +161,6 @@ if has('folding')
   set foldlevel=255
 endif
 
-" Syntastic - C Include Files 
-if at_work
-  source /home2/kyle.ames/.vim/fireeye.vim
-endif
-if !at_work
-  let g:syntastic_c_include_dirs = [ '/usr/local/Cellar/pebble-sdk/2.8.1/Pebble/include/' ]
-endif
-
 " Python - Show whitespace so that we don't get burned
 au filetype Python set listchars=tab:>.,trail:.,extends:#,nbsp:.
 au FileType python set shiftwidth=4
@@ -189,11 +169,7 @@ au FileType python set softtabstop=4
 " Vim-Airline
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
-if !at_work
-  let g:airline_powerline_fonts = 1
-else
-  let g:airline_powerline_fonts = 0
-endif
+let g:airline_powerline_fonts = 1
 
 " Syntax and search highlighting support
 if has('syntax')
@@ -202,7 +178,6 @@ if has('syntax')
     set hlsearch
   endif
 endif
-
 
 " vim-go - Golang plugins for vim
 let g:go_bin_path = $HOME."/.gobin/"
@@ -260,14 +235,8 @@ inoremap <F7> <esc>:FZFLines<CR>
 nnoremap <silent> <F8> :FZFTags
 inoremap <silent> <F8> <esc>:FZFTags
 
-if(at_work)
-  command Edit silent ! p4 edit %
-  nnoremap <F9> :Edit<CR>:e!<CR>:redraw!<CR>
-  inoremap <F9> <esc>:Edit<CR>:e!<CR>:redraw!<CR>
-else
-  nnoremap <F9> :GitGutterToggle <CR>
-  inoremap <F9> <esc>:GitGutterToggle <CR>
-endif
+nnoremap <F9> :GitGutterToggle <CR>
+inoremap <F9> <esc>:GitGutterToggle <CR>
 
 nnoremap <F10> :Gitv
 inoremap <F10> <esc>:Gitv
@@ -383,15 +352,6 @@ nnoremap <silent> <C-e> :<C-u>call ToggleErrors()<CR>
 
 " Search the file using the fuzzy finder
 nnoremap <leader><Space> :FZFLines<CR>
-
-" Save 
-nnoremap <C-s> :update<CR>
-inoremap <C-s> <C-O>:update<cr>
-
-" Quit
-inoremap <C-Q> <esc>:q<cr>
-nnoremap <C-Q> :q<cr>
-vnoremap <C-Q> <esc>
 
 " Avoid some security problems with directory-specific vimrc files
 " This should be the last line of the file
