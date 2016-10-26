@@ -20,10 +20,8 @@ call plug#begin('~/.vim/bundle')
 Plug 'majutsushi/tagbar'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'bling/vim-airline'
-Plug 'kien/ctrlp.vim'
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
-Plug 'moll/vim-bbye'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " Git
@@ -34,7 +32,6 @@ Plug 'airblade/vim-gitgutter'
 " Extended Shortcuts
 Plug 'jeetsukumaran/vim-buffergator'
 Plug 'junegunn/vim-peekaboo'
-Plug 'tpope/vim-commentary'
 
 " Syntax/Languge Plugins
 Plug 'fatih/vim-go'
