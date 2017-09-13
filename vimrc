@@ -43,7 +43,7 @@ call plug#end()
 " General Vim Settings
 "*******************************************************************
 
-" Use Sauce Code Pro 11 in the GUI as well 
+" Use Sauce Code Pro 12 in the GUI as well 
 if has('gui_running')
   set guifont=Sauce\ Code\ Powerline:h12
 endif
@@ -344,7 +344,7 @@ nnoremap gN :bp<CR>
 nnoremap gnt :tabnext<CR>
 nnoremap gNt :tabprev<CR>
 
-" Breaking lines with \[enter] to save the awkward into insert and out
+" Breaking lines with ,[enter] to save the awkward into insert and out
 noremap <leader><cr> i<cr><Esc>
 
 " For when I'm dumb and open a RO file without sudo
