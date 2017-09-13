@@ -23,6 +23,10 @@ Plug 'bling/vim-airline'
 Plug 'scrooloose/syntastic'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'chazy/cscope_maps'
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'tpope/vim-commentary'
+Plug 'vim-scripts/TaskList.vim'
+Plug 'ryanoasis/vim-devicons'
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -169,6 +173,11 @@ let g:syntastic_rust_rustc_exe = 'cargo check'
 let g:syntastic_rust_rustc_fname = ''
 let g:syntastic_rust_rustc_args = '--'
 let g:syntastic_rust_checkers = ['rustc']
+
+" Rainbow Parentheses - turn them all on
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
 
 "*******************************************************************
 " Function Key Shortcut Remappings 
