@@ -88,9 +88,6 @@ set shiftround
 set expandtab     
 set autoindent      
 
-" Change directory to the current buffer when opening files.
-set autochdir
-
 " Other settings
 set title           "Show the terminal title if possible"
 set autowrite       "Save the buffer when performing commands"
