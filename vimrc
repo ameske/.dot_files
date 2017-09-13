@@ -109,36 +109,6 @@ set splitright
 " Programming Specific Settings - (Syntax, Plugins, Features, etc.)
 "*******************************************************************
 
-" cscope and ctags integration
-if has("cscope")
-  set cscopetag cscopeverbose
-
-  if has('quickfix')
-    set cscopequickfix=s-,c-,d-,i-,t-,e-
-  endif
-
-  set csto=0
-
-  cnoreabbrev csa cs add
-  cnoreabbrev csf cs find
-  cnoreabbrev csk cs kill
-  cnoreabbrev csr cs reset
-  cnoreabbrev css cs show
-  cnoreabbrev csh cs help
-
-  " emulates 'find the ctags' file for cscope
-  function! LoadCscope()
-    let db = findfile("cscope.out", ".;")
-    if (!empty(db))
-      let path = strpart(db, 0, match(db, "/cscope.out$"))
-      set nocscopeverbose " suppress 'duplicate connection' error
-      exe "cs add " . db . " " . path
-      set cscopeverbose
-    endif
-  endfunction
-  call LoadCscope()
-endif
-
 " ctags
 set tags=./tags;/
 
