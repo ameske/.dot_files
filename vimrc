@@ -176,7 +176,7 @@ let g:syntastic_rust_checkers = ['rustc']
 "       F2  - Paste Mode
 "       F3  - Highlight Search
 "       F4  - Tagbar
-"       F5  - NERD Tree
+"       F5  - Unmapped
 "       F6  - FZF
 "       F7  - FZF Grep
 "       F8  - FZF Tag Search
@@ -193,8 +193,8 @@ inoremap <silent> <F3> <C-O>:set hlsearch!<CR><C-O>:set hlsearch?<CR>
 nnoremap <F4> :TagbarToggle<CR>
 inoremap <F5> <esc>:TagbarToggle<CR>
 
-nnoremap <F5> :NERDTreeToggle<CR>
-inoremap <F5> <esc>:NERDTreeToggle<CR>
+"nnoremap <F5> :NERDTreeToggle<CR>
+"inoremap <F5> <esc>:NERDTreeToggle<CR>
 
 nnoremap <F6> :FZF ~<CR>
 inoremap <F6> <esc>:FZF ~<CR>
