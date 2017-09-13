@@ -64,22 +64,33 @@ set nomodeline
 " Keep the cursor on the same column
 set nostartofline
 
+" Show relative line numbers in normal mode (good for deleteing, yanking, movement)
+set number
+set relativenumber
+autocmd InsertEnter * :set norelativenumber
+autocmd InsertLeave * :set relativenumber
+
 " Turn off spellcheck by default
 if has ('spell')
   set nospell
 endif
 
+" Make global substitutions default
+set gdefault
+
 " WTF happened to backspace with vim 7.4. on RHEL?
 set backspace=indent,eol,start
 
-" Show numbers, don't beep at me, and save 50 lines of history
-set number
+" Don't beep at me
 set visualbell
+
+" Save 50 lines of history
 set history=50
 
-" Make searches case-insensitive, unless they contain upper-case
+" Smarter, better searches
 set ignorecase
 set smartcase
+set incsearch       
 
 " Matching braces and visual line-wrapping
 set showmatch
@@ -92,11 +103,14 @@ set shiftround
 set expandtab     
 set autoindent      
 
-" Other settings
-set title           "Show the terminal title if possible"
-set autowrite       "Save the buffer when performing commands"
-set scrolloff=3     "Save three lines above and below"
-set incsearch       "Show best search so far"
+"Show the terminal title if possible"
+set title           
+
+"Save the buffer when performing commands
+set autowrite       
+
+"Save 5 lines above and below the cursor
+set scrolloff=5
 
 " Command line info
 if has('cmdline_info')
@@ -202,8 +216,8 @@ inoremap <silent> <F3> <C-O>:set hlsearch!<CR><C-O>:set hlsearch?<CR>
 nnoremap <F4> :TagbarToggle<CR>
 inoremap <F5> <esc>:TagbarToggle<CR>
 
-"nnoremap <F5> :NERDTreeToggle<CR>
-"inoremap <F5> <esc>:NERDTreeToggle<CR>
+nnoremap <F5> :Gitv<CR>
+inoremap <F5> <esc>:Gitv<CR>
 
 nnoremap <F6> :FZF ~<CR>
 inoremap <F6> <esc>:FZF ~<CR>
@@ -211,20 +225,20 @@ inoremap <F6> <esc>:FZF ~<CR>
 nnoremap <F7> :FZFLines<CR>
 inoremap <F7> <esc>:FZFLines<CR>
 
-nnoremap <silent> <F8> :FZFTags
-inoremap <silent> <F8> <esc>:FZFTags
+nnoremap <silent> <F8> :FZFTags<CR>
+inoremap <silent> <F8> <esc>:FZFTags<CR>
 
-nnoremap <F9> :GitGutterToggle <CR>
-inoremap <F9> <esc>:GitGutterToggle <CR>
+nnoremap <F9> :GitGutterToggle<CR>
+inoremap <F9> <esc>:GitGutterToggle<CR>
 
-nnoremap <F10> :Gitv
-inoremap <F10> <esc>:Gitv
+nnoremap <F10> :RainbowParenthesesToggle<CR>
+inoremap <F10> <esc>:RainbowParenthesesToggle<CR>
 
-nnoremap <F11> za
-inoremap <F11> <C-O>za
+nnoremap <F11> :TaskList<CR>
+inoremap <F11> <esc>:TaskList<CR>
 
-nnoremap <F12> :call FoldColumnToggle()<CR>
-inoremap <F12> <esc>:call FoldColumnToggle()<CR>
+"nnoremap <F12> :call FoldColumnToggle()<CR>
+"inoremap <F12> <esc>:call FoldColumnToggle()<CR>
 
 "*******************************************************************
 " Functions/Commands
