@@ -21,8 +21,8 @@ Plug 'majutsushi/tagbar'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'bling/vim-airline'
 Plug 'scrooloose/syntastic'
-Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'chazy/cscope_maps'
 
 " Git
 Plug 'tpope/vim-fugitive'
