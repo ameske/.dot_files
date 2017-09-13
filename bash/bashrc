@@ -32,21 +32,6 @@ fi
 # NOTE: Be sure to source the installed git's bash completion and git-prompt
 # in local_bashrc
 
-# determine if we are in a perforce scm directory directory
-function p4c {
-  if hash p4 2>/dev/null; then
-    if [ "`p4 set | grep "P4CLIENT" | awk '{print $1}' | sed s/P4CLIENT=//`" != "" ]; then
-      echo "[p4] "
-      return
-    else
-      echo ""
-      return
-    fi
-  fi
-
-  echo ""
-}
-
 #*****************************************************#
 # Options 
 #*****************************************************#
@@ -82,11 +67,9 @@ SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
 
 # Set our prompt up
 if [ $SSH2_IP ] || [ $SSH_IP ] ; then
-  #PS1='[$(date +%H:%M)][ssh]$(p4c)[\u@\H:\W]$(__git_ps1 "[git] (%s)")\$ '
-  PROMPT_COMMAND='__git_ps1 "[$(date +%H:%M)] [ssh] $(p4c)[\u@\H: \W]" "\$ "'
+  PROMPT_COMMAND='__git_ps1 "[$(date +%H:%M)] [ssh] [\u@\H: \W]" "\$ "'
 else
-  #PS1='[$(date +%H:%M)]$(p4c)[\u@\h:\W]$(__git_ps1 "[git] (%s)")\$ '
-  PROMPT_COMMAND='__git_ps1 "[$(date +%H:%M)] $(p4c)[\u@\H: \W]" "\$ "'
+  PROMPT_COMMAND='__git_ps1 "[$(date +%H:%M)] [\u@\H: \W]" "\$ "'
 fi
 
 # Set up homebrew if we are on OSX
@@ -237,13 +220,3 @@ fkill() {
     kill -${1:-9} $pid
   fi
 }
-
-# cdg - bookmark fuzzy finding. list path bookmarks in .cdg_paths
-unalias cdg 2> /dev/null
-cdg() {
-   local dest_dir=$(cdscuts_glob_echo | fzf )
-   if [[ $dest_dir != '' ]]; then
-      cd "$dest_dir"
-   fi
-}
-export -f cdg > /dev/null
