@@ -113,7 +113,7 @@ set splitright
 set tags=./tags;/
 
 " Git-Gutter
-let g:gitgutter_enabled = 0
+let g:gitgutter_enabled = 1
 highlight clear SignColumn
 
 " Folding - Enable folding if your snytax supports it. This does not start enabled by default when a file is opened.
@@ -180,7 +180,7 @@ let g:syntastic_rust_checkers = ['rustc']
 "       F6  - FZF
 "       F7  - FZF Grep
 "       F8  - FZF Tag Search
-"       F9  - Perforce Edit / Git-V
+"       F9  - GitGutter Toggle
 "       F10 - Gitv
 "       F11 - Fold/Unfold Block
 "       F12 - Show/Hide Fold Column
