@@ -192,6 +192,7 @@ let g:syntastic_rust_rustc_exe = 'cargo check'
 let g:syntastic_rust_rustc_fname = ''
 let g:syntastic_rust_rustc_args = '--'
 let g:syntastic_rust_checkers = ['rustc']
+let g:rustfmt_autosave = 1
 
 " Rainbow Parentheses - turn them all on
 au Syntax * RainbowParenthesesLoadRound
@@ -242,21 +243,9 @@ inoremap <F10> <esc>:RainbowParenthesesToggle<CR>
 nnoremap <F11> :TaskList<CR>
 inoremap <F11> <esc>:TaskList<CR>
 
-"nnoremap <F12> :call FoldColumnToggle()<CR>
-"inoremap <F12> <esc>:call FoldColumnToggle()<CR>
-
 "*******************************************************************
 " Functions/Commands
 "*******************************************************************
-
-" A function to toggle the fold column
-function! FoldColumnToggle()
-  if &foldcolumn
-    setlocal foldcolumn=0
-  else
-    setlocal foldcolumn=4
-  endif
-endfunction
 
 " Toggle the Snytastic error window with Ctrl+E
 function! ToggleErrors()
