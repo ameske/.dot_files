@@ -47,7 +47,15 @@ call plug#end()
 " General Vim Settings
 "*******************************************************************
 
-" Use Sauce Code Pro 12 in the GUI as well 
+" Highlight extra whitespace in red
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+
+" Use Sauce Code Pro 12 in the GUI as well
 if has('gui_running')
   set guifont=Sauce\ Code\ Powerline:h12
 endif
@@ -64,11 +72,8 @@ set nomodeline
 " Keep the cursor on the same column
 set nostartofline
 
-" Show relative line numbers in normal mode (good for deleteing, yanking, movement)
+" Show line numbers
 set number
-set relativenumber
-autocmd InsertEnter * :set norelativenumber
-autocmd InsertLeave * :set relativenumber
 
 " Turn off spellcheck by default
 if has ('spell')
@@ -90,24 +95,24 @@ set history=50
 " Smarter, better searches
 set ignorecase
 set smartcase
-set incsearch       
+set incsearch
 
 " Matching braces and visual line-wrapping
 set showmatch
 set nowrap
 
 " Tab and Space stuff
-set shiftwidth=2    
-set softtabstop=2   
+set shiftwidth=4
+set softtabstop=4
 set shiftround
-set expandtab     
-set autoindent      
+set expandtab
+set autoindent
 
 "Show the terminal title if possible"
-set title           
+set title
 
 "Save the buffer when performing commands
-set autowrite       
+set autowrite
 
 "Save 5 lines above and below the cursor
 set scrolloff=5
@@ -194,7 +199,7 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 "*******************************************************************
-" Function Key Shortcut Remappings 
+" Function Key Shortcut Remappings
 "       F1  - Help
 "       F2  - Paste Mode
 "       F3  - Highlight Search
@@ -313,7 +318,7 @@ command! FZFTagFile if !empty(tagfiles()) | call fzf#run({
 
 
 "*******************************************************************
-" Custom Mappings 
+" Custom Mappings
 "*******************************************************************
 
 " The arrow keys are evil, don't let them be used
