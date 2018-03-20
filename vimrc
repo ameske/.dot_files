@@ -25,7 +25,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'chazy/cscope_maps'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'tpope/vim-commentary'
-Plug 'vim-scripts/TaskList.vim'
 Plug 'ryanoasis/vim-devicons'
 
 " Git
@@ -186,6 +185,7 @@ let g:go_highlight_operators = 1
 let g:go_highlight_interfaces = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
+let g:go_version_warning = 0
 
 " rust - use cargo check
 let g:syntastic_rust_rustc_exe = 'cargo check'
